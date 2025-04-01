@@ -18,8 +18,9 @@ public class MemberServiceImpl implements MemberService{
 		MemberDTO searchedMember = mapper.getMemberByMemberId(member.getMemberId());
 		
 		if(searchedMember != null) {
-			throw new RuntimeException("이미 존재하는 아이디");
+			throw new RuntimeException("이미 존재하는 아이디입니다");
 		}
+		
 		
 		// 할 일 두개
 		// 첫 번째 : 비밀번호 암호화

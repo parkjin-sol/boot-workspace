@@ -2,7 +2,10 @@ package com.kh.start.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.FormLoginConfigurer;
@@ -39,10 +42,20 @@ public class SecurityConfigure {
 		return httpSecurity.formLogin(AbstractHttpConfigurer::disable)
 						   .httpBasic(AbstractHttpConfigurer::disable)
 						   .csrf(AbstractHttpConfigurer::disable)
+						   .authorizeHttpRequests(requests -> {
+							   requests.requestMatchers(HttpMethod.POST, "/auth/login", "/members").permitAll();
+							   requests.requestMatchers("/admin/**").hasRole("ADMIN");
+							   requests.requestMatchers(HttpMethod.PUT, "/members").authenticated();
+							   
+						   })
 						   .build();
 		
 		
 		
+	}
+	@Bean 
+	public AuthenticationManager authenricationManager(AuthenticationConfiguration authConfig) throws Exception {
+		return authConfig.getAuthenticationManager();
 	}
 	
 	@Bean
