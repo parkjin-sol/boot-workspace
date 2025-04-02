@@ -6,8 +6,7 @@ public interface TokenService {
 	
 	// 1. AccessToken 만들기
 	// 2. RefreshToken 만들기
-	
-	Map<String, String> generateToken(String username);
+	Map<String, String> generateToken(String username, Long memberNo);
 	
 	
 	// 3. RefreshToken Table에 INSERT하기
@@ -15,4 +14,5 @@ public interface TokenService {
 	// 4. 만료기간이 끝난 리프레시토큰 DELETE 하기
 	
 	// 5. 사용자가 리프레시 토큰을 가지고 증명하려 할 때 DB가서 조회해오기
+	Map<String, String> refreshToken(String refreshToken);
 }

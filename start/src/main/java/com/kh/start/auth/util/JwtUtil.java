@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
@@ -40,6 +41,7 @@ public class JwtUtil {
 		return Jwts.builder().subject(username) // 사용자 이름
 			  			  .issuedAt(new Date()) // 발급일 
 			  			  .expiration(new Date(System.currentTimeMillis() + 36000000L * 24)) // 만료일
+			  			  // .expiration(new Date())
 			  			  .signWith(key) // 서명
 			  			  .compact();
 	}
@@ -47,9 +49,17 @@ public class JwtUtil {
 	public String getRefreshToken(String username) {
 		return Jwts.builder()
 				   .subject(username)
-				   .expiration(new Date(System.currentTimeMillis() + 36000000L * 24 * 3))
+				   .expiration(new Date(System.currentTimeMillis() + 36000000L * 24 * 3))			   
 				   .signWith(key)
 				   .compact();
+	}
+	
+	public Claims parseJwt(String token) {
+		return Jwts.parser()
+				   .verifyWith(key)
+				   .build()
+				   .parseSignedClaims(token)
+				   .getPayload();
 	}
 	
 }
