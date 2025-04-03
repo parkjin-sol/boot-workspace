@@ -10,11 +10,11 @@ public interface BoardService {
 	
 	void save(BoardDTO board, MultipartFile file);
 	
-	List<BoardDTO> findAll(int pageNo);
-	
 	BoardDTO findById(Long boardNo);
 	
 	BoardDTO update(BoardDTO board, MultipartFile file);
 	
 	void deleteById(Long boardNo);
+
+	List<BoardDTO> findAll(int pageNo);
 }
