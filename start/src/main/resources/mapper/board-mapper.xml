@@ -44,8 +44,8 @@
           parameterType="long"
           resultType="com.kh.start.board.model.dto.BoardDTO">
     <include refid="boardColumn" />
-        , BOARD_CONTENT
-        , BOARD_FILE_URL
+        , BOARD_CONTENT boardContent
+        , BOARD_FILE_URL boardFileUrl
       FROM 
         TB_BOOT_BOARD 
       JOIN 
